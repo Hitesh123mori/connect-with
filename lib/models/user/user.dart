@@ -11,6 +11,7 @@ import 'package:connectwith/models/user/test_score.dart';
 class AppUser {
 
   String? userID;
+  String? email ;
   String? userName;
   String? pronoun;
   String? additionalName;
@@ -45,6 +46,7 @@ class AppUser {
 
   AppUser({
     this.userID,
+    this.email,
     this.userName,
     this.pronoun,
     this.additionalName,
@@ -77,6 +79,7 @@ class AppUser {
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['userID'] = userID;
+    map['email'] = email ;
     map['userName'] = userName;
     map['pronoun'] = pronoun;
     map['additionalName'] = additionalName;
@@ -126,6 +129,7 @@ class AppUser {
   factory AppUser.fromJson(dynamic json) {
     return AppUser(
         userID: json['userID'],
+        email : json['email'],
         userName: json['userName'],
         pronoun: json['pronoun'],
         additionalName: json['additionalName'],

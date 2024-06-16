@@ -1,10 +1,9 @@
 import 'package:connectwith/models/user/project.dart';
-import 'package:connectwith/models/user/user.dart';
 
 class Skill {
   String? name;
-  List<AppUser>? endorsedPeoples;
-  List<Project>? projects;
+  List<String>? endorsedPeoples;
+  List<String>? projects;
 
   Skill({
     this.name,
@@ -15,24 +14,20 @@ class Skill {
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['name'] = name;
-    map['endorsedPeoples'] = endorsedPeoples?.map((e) => e.toJson()).toList();
-    map['projects'] = projects?.map((e) => e.toJson()).toList();
+    map['endorsedPeoples'] = endorsedPeoples;
+    map['projects'] = projects;
 
     return map;
   }
 
-  factory Skill.fromJson(dynamic json) {
+  factory Skill.fromJson(Map<String, dynamic> json) {
     return Skill(
       name: json['name'],
-      endorsedPeoples: json['endorsedPeoples']!= null
-          ? (json['endorsedPeoples'] as List)
-          .map((e) => AppUser.fromJson(e))
-          .toList()
+      endorsedPeoples: json['endorsedPeoples'] != null
+          ? List<String>.from(json['endorsedPeoples'])
           : null,
-      projects: json['projects']!= null
-          ? (json['projects'] as List)
-          .map((e) => Project.fromJson(e))
-          .toList()
+      projects:  json['projects'] != null
+          ? List<String>.from(json['projects'])
           : null,
     );
   }
