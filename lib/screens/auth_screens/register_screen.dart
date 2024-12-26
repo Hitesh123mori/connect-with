@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:connectwith/apis/auth_apis/auth_apis.dart';
 import 'package:connectwith/screens/auth_screens/login_screen.dart';
 import 'package:connectwith/screens/home_screens/home_main_screen.dart';
 import 'package:connectwith/side_transitions/left_right.dart';
@@ -9,7 +10,6 @@ import 'package:connectwith/utils/widgets/text_feilds/text_feild_1.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../../utils/widgets/buttons/button_1.dart';
-import '../../utils/widgets/custom_containers/auth_container.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -33,40 +33,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   // Function for registering user
   Future<void> registerUser(String email, String password, String userName) async {
-    final String url = 'http://192.168.75.92:5000/register';
-
     try {
-      final response = await http.post(
-        Uri.parse(url),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({
-          'userName': userName,
-          'email': email,
-          'password': password,
-
-        }),
+      await AuthApi.signUp(
+        context,
+        _emailController.text,
+        _passwordController.text,
+          _userNameController.text,
       );
-
-      if (response.statusCode == 201) {
-        setState(() {
-          _message = '${jsonDecode(response.body)['message']}';
-          HelperFunctions.showToast(_message);
-          Navigator.pushReplacement(context, LeftToRight(HomeScreen()));
-        });
-      } else {
-        setState(() {
-          _message = '${jsonDecode(response.body)['message']}';
-          HelperFunctions.showToast(_message);
-
-        });
-      }
-    } catch (e) {
-      setState(() {
-        _message = 'Error: $e';
-        print("#registerE : $_message") ;
-        HelperFunctions.showToast("Something went wrong!");
-      });
+      await Navigator.pushReplacement(context, LeftToRight(HomeScreen()));
+    } catch (error) {
+      print(error);
+      HelperFunctions.showToast("Something went wrong!");
     }
+
   }
 
   // Email validator
@@ -108,8 +87,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
         backgroundColor: AppColors.theme['backgroundColor'],
         body: Center(
           child: Container(
-            height: mq.height * 0.7,
+            height: mq.height * 0.6,
             width: mq.width * 0.9,
+            constraints: BoxConstraints(
+              minHeight: 550,
+              minWidth: 350,
+            ),
             decoration: BoxDecoration(
               color: AppColors.theme['secondaryColor'],
               borderRadius: BorderRadius.circular(20),
@@ -206,46 +189,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     Navigator.push(context, RightToLeft(LoginScreen()));
                                   },
                                   child: Text(
-                                    "Already have an account? Login",
-                                    style: TextStyle(color: AppColors.theme['primaryColor']),
+                                    "Go to Login",
+                                    style: TextStyle(color: AppColors.theme['primaryColor'],fontSize:15,fontWeight: FontWeight.bold ),
                                   ),
                                 ),
                               ],
                             ),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Divider(
-                                    color: AppColors.theme['tertiaryColor'].withOpacity(0.2),
-                                    thickness: 2,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                  child: Text(
-                                    "OR",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Divider(
-                                    color: AppColors.theme['tertiaryColor'].withOpacity(0.2),
-                                    thickness: 2,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 20),
-                            AuthContainer(
-                              path: 'assets/other_images/google.png',
-                              title: 'Continue with Google',
-                              onTap: () {},
-                            ),
-                            SizedBox(height: 20),
-
                           ],
                         ),
                       ),

@@ -1,16 +1,15 @@
-import 'dart:convert';
+import 'package:connectwith/apis/init/config.dart';
 import 'package:connectwith/screens/auth_screens/register_screen.dart';
 import 'package:connectwith/screens/home_screens/home_main_screen.dart';
 import 'package:connectwith/side_transitions/left_right.dart';
+import 'package:connectwith/utils/helper_functions/helper_functions.dart';
 import 'package:connectwith/utils/theme/colors.dart';
 import 'package:connectwith/utils/widgets/text_feilds/text_feild_1.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import '../../main.dart';
-import '../../utils/helper_functions/helper_functions.dart';
+import '../../apis/auth_apis/auth_apis.dart';
 import '../../utils/widgets/buttons/button_1.dart';
-import '../../utils/widgets/custom_containers/auth_container.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -20,48 +19,22 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  // for login loading condition
+
   bool _isLoading = false;
-
-  // For displaying messages
-  String _message = '';
-
-  // Controllers
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  // Function for login
   Future<void> loginUser(String email, String password) async {
-    final String url = 'http://192.168.75.92:5000/login';
+
+    if (email.isEmpty || password.isEmpty) {
+      HelperFunctions.showToast("Fill Email and Password") ;
+      return;
+    }
 
     try {
-      final response = await http.post(
-        Uri.parse(url),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({
-          'email': email,
-          'password': password,
-        }),
-      );
-
-      if (response.statusCode == 200) {
-        setState(() {
-          _message = 'Login successful!';
-          HelperFunctions.showToast(_message);
-          Navigator.pushReplacement(context, LeftToRight(HomeScreen()));
-        });
-      } else {
-        setState(() {
-          _message = '${jsonDecode(response.body)['message']}';
-          HelperFunctions.showToast(_message);
-        });
-      }
-    } catch (e) {
-      setState(() {
-        _message = 'Error: $e';
-        print("#loginError : $_message");
-        HelperFunctions.showToast("Something went wrong!");
-      });
+      await AuthApi.signIn(context, email, password);
+      } catch (e) {
+      HelperFunctions.showToast("Something went wrong!");
     }
   }
 
@@ -74,8 +47,12 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: AppColors.theme['backgroundColor'],
         body: Center(
           child: Container(
-            height: mq.height * 0.7,
+            height: mq.height * 0.45,
             width: mq.width * 0.9,
+            constraints: BoxConstraints(
+              minHeight: 500,
+              minWidth: 350,
+            ),
             decoration: BoxDecoration(
               color: AppColors.theme['secondaryColor'],
               borderRadius: BorderRadius.circular(20),
@@ -126,24 +103,23 @@ class _LoginScreenState extends State<LoginScreen> {
                           textColor: AppColors.theme['secondaryColor'],
                           bgColor: AppColors.theme['primaryColor'],
                           onTap: () {
+                            setState(() {
+                              _isLoading = true;
+                            });
+                            loginUser(
+                              _emailController.text,
+                              _passwordController.text,
+                            ).then((_) {
                               setState(() {
-                                _isLoading = true;
+                                _isLoading = false;
                               });
-
-                              loginUser(
-                                _emailController.text,
-                                _passwordController.text,
-                              ).then((_) {
-                                setState(() {
-                                  _isLoading = false;
-                                });
-                              });
-
+                            });
                           },
                           title: 'Login',
                           isLoading: _isLoading,
                           loadWidth: 200,
                         ),
+                        SizedBox(height: 20,),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -153,50 +129,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               },
                               child: Text(
                                 "Register",
-                                style: TextStyle(color: AppColors.theme['primaryColor']),
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: () {},
-                              child: Text(
-                                "Forget Password",
-                                style: TextStyle(color: AppColors.theme['primaryColor']),
+                                style: TextStyle(color: AppColors.theme['primaryColor'], fontWeight: FontWeight.bold, fontSize: 15),
                               ),
                             ),
                           ],
                         ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Divider(
-                                color: AppColors.theme['tertiaryColor'].withOpacity(0.2),
-                                thickness: 2,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Text(
-                                "OR",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Divider(
-                                color: AppColors.theme['tertiaryColor'].withOpacity(0.2),
-                                thickness: 2,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 20),
-                        AuthContainer(
-                          path: 'assets/other_images/google.png',
-                          title: 'Continue with Google',
-                          onTap: () {},
-                        )
                       ],
                     ),
                   ),
@@ -209,3 +146,4 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+

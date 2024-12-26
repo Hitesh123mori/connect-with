@@ -8,41 +8,37 @@ import 'package:connectwith/models/user/skills.dart';
 import 'package:connectwith/models/user/speak_language.dart';
 import 'package:connectwith/models/user/test_score.dart';
 
+import 'address_info.dart';
+
+
 class AppUser {
 
   String? userID;
-  String? email ;
+  String? email;
   String? userName;
   String? pronoun;
   String? additionalName;
   String? profilePath;
   String? coverPath;
   String? headLine;
-  String? curPosition;
-  String? industry;
-  String? location;
-  String? city;
+  List<Experience>? positions;
+  Address? address;
   String? about;
   int? followers;
   int? following;
   int? profileViews;
   int? searchCount;
-
-  List<TestScores>? testScores ;
-  List<Skill>?skills;
+  List<TestScores>? testScores;
+  List<Skill>? skills;
   List<Project>? projects;
   List<SpeakLanguage>? language;
-  List<Experience>? experiences ;
+  List<Experience>? experiences;
   List<Education>? educations;
-  CustomButton? button ;
+  CustomButton? button;
   List<Course>? courses;
-  List<LicenseAndCertificate>? lacertificate ;
-  ContactInfo? info ;
-
-
-
-
-
+  List<LicenseAndCertificate>? lacertificate;
+  ContactInfo? info;
+  String? createAt;
 
   AppUser({
     this.userID,
@@ -53,10 +49,8 @@ class AppUser {
     this.profilePath,
     this.coverPath,
     this.headLine,
-    this.curPosition,
-    this.industry,
-    this.location,
-    this.city,
+    this.positions,
+    this.address,
     this.about,
     this.followers,
     this.following,
@@ -72,30 +66,31 @@ class AppUser {
     this.courses,
     this.lacertificate,
     this.info,
+    this.createAt,
   });
-
-
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['userID'] = userID;
-    map['email'] = email ;
+    map['email'] = email;
     map['userName'] = userName;
     map['pronoun'] = pronoun;
     map['additionalName'] = additionalName;
     map['profilePath'] = profilePath;
     map['coverPath'] = coverPath;
     map['headLine'] = headLine;
-    map['curPosition'] = curPosition;
-    map['industry'] = industry;
-    map['location'] = location;
-    map['city'] = city;
+    map['create-at'] = createAt ;
+    if (positions != null) {
+      map['curPosition'] = positions!.map((e) => e.toJson()).toList();
+    }
+    if (address != null) {
+      map['address'] = address!.toJson();
+    }
     map['about'] = about;
     map['followers'] = followers;
     map['following'] = following;
     map['profileViews'] = profileViews;
     map['searchCount'] = searchCount;
-    map['button'] = button;
     if (testScores != null) {
       map['testScores'] = testScores!.map((e) => e.toJson()).toList();
     }
@@ -128,26 +123,29 @@ class AppUser {
 
   factory AppUser.fromJson(dynamic json) {
     return AppUser(
-        userID: json['userID'],
-        email : json['email'],
-        userName: json['userName'],
-        pronoun: json['pronoun'],
-        additionalName: json['additionalName'],
-        profilePath: json['profilePath'],
-        coverPath: json['coverPath'],
-        headLine: json['headLine'],
-        curPosition: json['curPosition'],
-        industry: json['industry'],
-        location: json['location'],
-        city: json['city'],
-        about: json['about'],
-        followers: json['followers'],
-        following: json['following'],
-        profileViews: json['profileViews'],
-        searchCount: json['searchCount'],
-        info: json['info'] != null ? ContactInfo.fromJson(json['info']) : null,
-        button: json['button'] != null ? CustomButton.fromJson(json['button']) : null,
-        testScores: json['testScores'] != null
+      userID: json['userID'],
+      email: json['email'],
+      userName: json['userName'],
+      pronoun: json['pronoun'],
+      additionalName: json['additionalName'],
+      profilePath: json['profilePath'],
+      coverPath: json['coverPath'],
+      headLine: json['headLine'],
+      createAt: json['create-at'],
+      positions: json['curPosition'] != null
+          ? (json['curPosition'] as List)
+          .map((e) => Experience.fromJson(e))
+          .toList()
+          : null,
+      address: json['address'] != null ? Address.fromJson(json['address']) : null,
+      about: json['about'],
+      followers: json['followers'],
+      following: json['following'],
+      profileViews: json['profileViews'],
+      searchCount: json['searchCount'],
+      info: json['info'] != null ? ContactInfo.fromJson(json['info']) : null,
+      button: json['button'] != null ? CustomButton.fromJson(json['button']) : null,
+      testScores: json['testScores'] != null
           ? (json['testScores'] as List)
           .map((e) => TestScores.fromJson(e))
           .toList()
@@ -158,34 +156,30 @@ class AppUser {
           .toList()
           : [],
       projects: json['projects'] != null
-            ? (json['projects'] as List)
-            .map((e) => Project.fromJson(e))
-            .toList()
-            : [],
-
+          ? (json['projects'] as List)
+          .map((e) => Project.fromJson(e))
+          .toList()
+          : [],
       language: json['language'] != null
-           ? (json['language'] as List)
-           .map((e) => SpeakLanguage.fromJson(e))
-           .toList()
-           : [],
-
+          ? (json['language'] as List)
+          .map((e) => SpeakLanguage.fromJson(e))
+          .toList()
+          : [],
       experiences: json['experiences'] != null
           ? (json['experiences'] as List)
           .map((e) => Experience.fromJson(e))
           .toList()
           : [],
-      educations:  json['educations'] != null
+      educations: json['educations'] != null
           ? (json['educations'] as List)
           .map((e) => Education.fromJson(e))
           .toList()
           : [],
-
-      courses:  json['courses'] != null
+      courses: json['courses'] != null
           ? (json['courses'] as List)
           .map((e) => Course.fromJson(e))
           .toList()
           : [],
-
       lacertificate: json['lacertificate'] != null
           ? (json['lacertificate'] as List)
           .map((e) => LicenseAndCertificate.fromJson(e))
@@ -193,6 +187,4 @@ class AppUser {
           : [],
     );
   }
-
-
 }
