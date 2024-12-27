@@ -125,7 +125,4 @@ class AuthApi{
     return (await Config.firestore.collection('users').doc(userId).get()).exists;
   }
 
-
-
-
 }

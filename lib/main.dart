@@ -1,6 +1,8 @@
+import 'package:connectwith/providers/current_user_provider.dart';
 import 'package:connectwith/screens/onboard_screens/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart' ;
+import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 
 late Size mq ;
@@ -8,7 +10,11 @@ void main()async{
 
   WidgetsFlutterBinding.ensureInitialized() ;
   await _intializeFirebase() ;
-  runApp(MyApp()) ;
+  runApp(MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context)=>AppUserProvider()),
+      ],
+      child: MyApp()));
 
 }
 
@@ -22,10 +28,12 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: SplashScreen() ,
+    return Consumer<AppUserProvider>(builder: (context,appUserProvider,child){
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: SplashScreen(appUser: appUserProvider,) ,
       ) ;
+    }) ;
   }
 }
 

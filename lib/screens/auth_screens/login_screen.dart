@@ -41,103 +41,106 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final Size mq = MediaQuery.of(context).size;
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: AppColors.theme['backgroundColor'],
-        body: Center(
-          child: Container(
-            height: mq.height * 0.45,
-            width: mq.width * 0.9,
-            constraints: BoxConstraints(
-              minHeight: 500,
-              minWidth: 350,
-            ),
-            decoration: BoxDecoration(
-              color: AppColors.theme['secondaryColor'],
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: mq.width * 0.07),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    "assets/logo/logo_2.jpg",
-                    height: 50,
-                    width: 200,
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    "Welcome Back!",
-                    style: TextStyle(
-                      color: AppColors.theme['primaryColor'],
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          backgroundColor: AppColors.theme['backgroundColor'],
+          body: Center(
+            child: Container(
+              height: mq.height * 0.45,
+              width: mq.width * 0.9,
+              constraints: BoxConstraints(
+                minHeight: 500,
+                minWidth: 350,
+              ),
+              decoration: BoxDecoration(
+                color: AppColors.theme['secondaryColor'],
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: mq.width * 0.07),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      "assets/logo/logo_2.jpg",
+                      height: 50,
+                      width: 200,
                     ),
-                  ),
-                  SizedBox(height: 10),
-                  SingleChildScrollView(
-                    physics: BouncingScrollPhysics(),
-                    child: Column(
-                      children: [
-                        TextFeild1(
-                          hintText: "Enter Email",
-                          isNumber: false,
-                          prefixicon: Icon(Icons.email),
-                          obsecuretext: false,
-                          controller: _emailController,
-                        ),
-                        TextFeild1(
-                          hintText: "Enter Password",
-                          isNumber: false,
-                          prefixicon: Icon(Icons.password),
-                          obsecuretext: true,
-                          controller: _passwordController,
-                        ),
-                        SizedBox(height: 20),
-                        Button1(
-                          height: 50,
-                          width: 300,
-                          textColor: AppColors.theme['secondaryColor'],
-                          bgColor: AppColors.theme['primaryColor'],
-                          onTap: () {
-                            setState(() {
-                              _isLoading = true;
-                            });
-                            loginUser(
-                              _emailController.text,
-                              _passwordController.text,
-                            ).then((_) {
+                    SizedBox(height: 20),
+                    Text(
+                      "Welcome Back!",
+                      style: TextStyle(
+                        color: AppColors.theme['primaryColor'],
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    SingleChildScrollView(
+                      physics: BouncingScrollPhysics(),
+                      child: Column(
+                        children: [
+                          TextFeild1(
+                            hintText: "Enter Email",
+                            isNumber: false,
+                            prefixicon: Icon(Icons.email),
+                            obsecuretext: false,
+                            controller: _emailController,
+                          ),
+                          TextFeild1(
+                            hintText: "Enter Password",
+                            isNumber: false,
+                            prefixicon: Icon(Icons.password),
+                            obsecuretext: true,
+                            controller: _passwordController,
+                          ),
+                          SizedBox(height: 20),
+                          Button1(
+                            height: 50,
+                            width: 300,
+                            textColor: AppColors.theme['secondaryColor'],
+                            bgColor: AppColors.theme['primaryColor'],
+                            onTap: () {
                               setState(() {
-                                _isLoading = false;
+                                _isLoading = true;
                               });
-                            });
-                          },
-                          title: 'Login',
-                          isLoading: _isLoading,
-                          loadWidth: 200,
-                        ),
-                        SizedBox(height: 20,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.push(context, LeftToRight(RegisterScreen()));
-                              },
-                              child: Text(
-                                "Register",
-                                style: TextStyle(color: AppColors.theme['primaryColor'], fontWeight: FontWeight.bold, fontSize: 15),
+                              loginUser(
+                                _emailController.text,
+                                _passwordController.text,
+                              ).then((_) {
+                                setState(() {
+                                  _isLoading = false;
+                                });
+                              });
+                            },
+                            title: 'Login',
+                            isLoading: _isLoading,
+                            loadWidth: 200,
+                          ),
+                          SizedBox(height: 20,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.push(context, LeftToRight(RegisterScreen()));
+                                },
+                                child: Text(
+                                  "Register",
+                                  style: TextStyle(color: AppColors.theme['primaryColor'], fontWeight: FontWeight.bold, fontSize: 15),
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

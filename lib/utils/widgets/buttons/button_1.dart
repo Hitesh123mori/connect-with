@@ -46,7 +46,7 @@ class Button1 extends StatelessWidget {
                     )),
                     SizedBox(width:10,),
                     Text(
-                      "Loading...",
+                      "Wait...",
                       style: TextStyle(
                           color: textColor,
                           fontWeight: FontWeight.bold,
