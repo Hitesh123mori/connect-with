@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:connectwith/models/user/user.dart';
 import 'package:connectwith/providers/current_user_provider.dart';
 import 'package:connectwith/screens/auth_screens/login_screen.dart';
 import 'package:connectwith/screens/home_screens/tabs/create_post/create_post_screen.dart';
@@ -15,6 +16,7 @@ import 'package:provider/provider.dart';
 import '../../apis/auth_apis/fetch_user_info.dart';
 import '../../apis/init/config.dart';
 import '../../utils/theme/colors.dart';
+import '../../utils/widgets/custom_containers/drawer_container.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -45,32 +47,59 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Consumer<AppUserProvider>(builder: (context,appUserProvider,child){
-      fetchAndPrintUserEmail() ;
       return  Scaffold(
         drawer: Drawer(
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 30.0,horizontal:10),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ListTile(
-                  title: Text("name here"),
-                  leading: CircleAvatar(),
-                ),
-                InkWell(
-                  onTap: ()async{
-                    await appUserProvider.logOut() ;
-                    HelperFunctions.showToast("Logout successfully") ;
-                    await Navigator.pushReplacement(context, RightToLeft(LoginScreen())) ;
-                  },
-                  child: Row(
-                    children: [
-                      Icon(Icons.logout),
-                      Text("L O G O U T")
-                    ],
+            padding: const EdgeInsets.symmetric(horizontal:20),
+            child: SafeArea(
+              child: Column(
+                children: [
+                  Container(
+                    height: 60,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10) ,
+                    ),
+                    child: Row(
+                      children: [
+                        CircleAvatar(),
+                        SizedBox(width: 10,),
+                        Text(appUserProvider.user?.userName ?? "Name",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 16),),
+                      ],
+                    )
                   ),
-                )
-              ],
+                  Divider(),
+                  DrawerContainer(data: appUserProvider.user?.followers.toString() ?? "0", label: 'Followers',) ,
+                  DrawerContainer(data: appUserProvider.user?.following.toString() ?? "0", label: 'Followings',) ,
+                  DrawerContainer(data: appUserProvider.user?.searchCount.toString() ?? "0", label: 'Search Count',) ,
+                  DrawerContainer(data: appUserProvider.user?.profileViews.toString() ?? "0", label: 'Profile Views',) ,
+                  Expanded(child: Container()) ,
+                  InkWell(
+                    onTap: ()async{
+                      await appUserProvider.logOut() ;
+                      HelperFunctions.showToast("Logout successfully") ;
+                      await Navigator.pushReplacement(context, RightToLeft(LoginScreen())) ;
+                    },
+                    child: Container(
+                      height: 60,
+                      decoration: BoxDecoration(
+                        color: AppColors.theme['primaryColor'].withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(10) ,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 20.0),
+                        child: Row(
+                          children: [
+                            Icon(Icons.logout),
+                            SizedBox(width: 10,),
+                            Text("L O G O U T",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),)
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 30,),
+                ],
+              ),
             ),
           ),
 
@@ -149,17 +178,3 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-void fetchAndPrintUserEmail() async {
-  String? userId = Config.auth.currentUser?.uid;
-  if (userId != null) {
-    final userData = await UserProfile.getUser(userId);
-    if (userData != null) {
-      final email = userData['email'];
-      log("User Email: $email");
-    } else {
-      log("User data not found for userId: $userId");
-    }
-  } else {
-    log("No user is currently logged in.");
-  }
-}

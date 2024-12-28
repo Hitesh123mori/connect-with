@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectwith/apis/init/config.dart';
 
 
-class UserProfile{
+class UserProfile {
 
   static final _collectionRef = Config.firestore.collection("users");
 
@@ -13,15 +13,20 @@ class UserProfile{
         .doc(userId)
         .get()
         .then((value) => value.data())
-        .onError((error, stackTrace) => {"error": error, "stackTrace": stackTrace});
+        .onError((error, stackTrace) =>
+    {
+      "error": error,
+      "stackTrace": stackTrace
+    });
   }
 
-  static Stream<QuerySnapshot<Map<String, dynamic>>> getAllAppUsers()  {
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getAllAppUsers() {
     return _collectionRef.snapshots();
   }
 
 
-  static Future<bool> updateUserProfile(String? userId, Map<String, dynamic> fields) async {
+  static Future<bool> updateUserProfile(String? userId,
+      Map<String, dynamic> fields) async {
     return await _collectionRef.doc("$userId").update(fields)
         .then((value) {
       log("#User Details updated");
@@ -34,6 +39,21 @@ class UserProfile{
   }
 
 
+// void fetchAndPrintUserEmail() async {
+//   String? userId = Config.auth.currentUser?.uid;
+//   if (userId != null) {
+//     final userData = await UserProfile.getUser(userId);
+//
+//     if (userData != null) {
+//       final email = userData['email'];
+//       log("User Email: $email");
+//     } else {
+//       log("User data not found for userId: $userId");
+//     }
+//   } else {
+//     log("No user is currently logged in.");
+//   }
+// }
 
 
 
