@@ -1,7 +1,5 @@
-class Experience {
+class Positions {
   String? title;
-  String? employementType;
-  String? companyName;
   String? location;
   String? startDate;
   String? endDate;
@@ -9,10 +7,8 @@ class Experience {
   List<String>? skills;
   String? media;
 
-  Experience({
+  Positions({
     this.title,
-    this.employementType,
-    this.companyName,
     this.location,
     this.startDate,
     this.endDate,
@@ -22,31 +18,60 @@ class Experience {
   });
 
   Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['title'] = title;
-    map['employementType'] = employementType;
-    map['companyName'] = companyName;
-    map['location'] = location;
-    map['startDate'] = startDate;
-    map['endDate'] = endDate;
-    map['description'] = description;
-    map['skills'] = skills;
-    map['media'] = media;
-
-    return map;
+    return {
+      'title': title,
+      'location': location,
+      'startDate': startDate,
+      'endDate': endDate,
+      'description': description,
+      'skills': skills,
+      'media': media,
+    };
   }
 
-  factory Experience.fromJson(dynamic json) {
-    return Experience(
+  factory Positions.fromJson(Map<String, dynamic> json) {
+    return Positions(
       title: json['title'],
-      employementType: json['employementType'],
-      companyName: json['companyName'],
       location: json['location'],
       startDate: json['startDate'],
       endDate: json['endDate'],
       description: json['description'],
-      skills: json['skills'].cast<String>(),
+      skills: (json['skills'] as List<dynamic>?)?.cast<String>(),
       media: json['media'],
+    );
+  }
+}
+
+class Experience {
+  String? title;
+  String? employementType;
+  String? companyName;
+  List<Positions>? positions;
+
+  Experience({
+    this.title,
+    this.employementType,
+    this.companyName,
+    this.positions,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'title': title,
+      'employementType': employementType,
+      'companyName': companyName,
+      'positions': positions?.map((position) => position.toJson()).toList(),
+    };
+  }
+
+  factory Experience.fromJson(Map<String, dynamic> json) {
+    return Experience(
+      title: json['title'],
+      employementType: json['employementType'],
+      companyName: json['companyName'],
+      positions: (json['positions'] as List<dynamic>?)
+          ?.map((position) => Positions.fromJson(position))
+          .toList(),
     );
   }
 }

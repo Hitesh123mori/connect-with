@@ -25,7 +25,7 @@ class _CustomProfileButtonState extends State<CustomProfileButton> {
   Widget build(BuildContext context) {
 
     final TextStyle textStyle = TextStyle(
-      fontSize: 16,
+      fontSize: 14,
       fontWeight: FontWeight.bold,
       color: Colors.white,
     );
@@ -37,8 +37,8 @@ class _CustomProfileButtonState extends State<CustomProfileButton> {
         HelperFunctions.launchURL(widget.link);
       },
       child: Container(
-        width: textWidth + 50,
-        height: 45,
+        width: textWidth + 40,
+        height: 40,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: AppColors.theme['primaryColor'],
@@ -53,6 +53,7 @@ class _CustomProfileButtonState extends State<CustomProfileButton> {
                 Text(
                   widget.data,
                   style: textStyle,
+
                 ),
               ],
             )

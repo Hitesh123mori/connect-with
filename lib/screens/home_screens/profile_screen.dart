@@ -1,3 +1,4 @@
+import 'package:connectwith/models/user/experience.dart';
 import 'package:connectwith/providers/current_user_provider.dart';
 import 'package:connectwith/screens/home_screens/home_main_screen.dart';
 import 'package:connectwith/side_transitions/right_left.dart';
@@ -8,6 +9,7 @@ import 'package:provider/provider.dart';
 import '../../main.dart';
 import '../../utils/widgets/buttons/profile_screen_buttons/profile_custom_button.dart';
 import '../../utils/widgets/custom_containers/profile_screen_container/analytics_tool_container.dart';
+import '../../utils/widgets/custom_containers/profile_screen_container/experience_card.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -131,8 +133,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 SizedBox(height: 40),
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 20.0, horizontal: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -141,8 +143,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             " (" +
                             (appUserProvider.user?.pronoun ?? "Pronoun") +
                             ") ",
-                        style:
-                            TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 22),
                       ),
                       Text(
                         (appUserProvider.user?.headLine ?? "Headline"),
@@ -154,14 +156,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         height: 20,
                       ),
                       CustomProfileButton(
-                        data: appUserProvider.user?.button?.linkText ?? "Button",
-                        link: appUserProvider.user?.button?.link ?? "google.com",
+                        data:
+                            appUserProvider.user?.button?.linkText ?? "Button",
+                        link:
+                            appUserProvider.user?.button?.link ?? "google.com",
                       ),
                       SizedBox(height: 20),
                       Row(
                         children: [
                           Text(
-                            (appUserProvider.user?.followers.toString() ?? "0") +
+                            (appUserProvider.user?.followers.toString() ??
+                                    "0") +
                                 " Followers",
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold),
@@ -176,7 +181,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           SizedBox(width: 5),
                           Text(
-                            (appUserProvider.user?.following.toString() ?? "0") +
+                            (appUserProvider.user?.following.toString() ??
+                                    "0") +
                                 " Following",
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold),
@@ -190,16 +196,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   thickness: 1,
                   color: AppColors.theme['primaryColor'].withOpacity(0.2),
                 ),
+                // analitics and tools
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 10.0, vertical: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         "Analytics & Tools",
-                        style:
-                            TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18),
                       ),
                       SizedBox(
                         height: 10,
@@ -209,9 +216,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Icons.group,
                           size: 22,
                         ),
-                        heading: (appUserProvider.user?.profileViews.toString() ??
-                                "0") +
-                            ' Profile Views',
+                        heading:
+                            (appUserProvider.user?.profileViews.toString() ??
+                                    "0") +
+                                ' Profile Views',
                         subheading: "Discover who's viewed your profile",
                         ontap: () {},
                       ),
@@ -223,10 +231,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Icons.search_rounded,
                           size: 22,
                         ),
-                        heading: (appUserProvider.user?.searchCount.toString() ??
-                                "0") +
-                            ' search appearances',
-                        subheading: "See how often you appear in search results",
+                        heading:
+                            (appUserProvider.user?.searchCount.toString() ??
+                                    "0") +
+                                ' search appearances',
+                        subheading:
+                            "See how often you appear in search results",
                         ontap: () {},
                       ),
                     ],
@@ -236,22 +246,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   thickness: 1,
                   color: AppColors.theme['primaryColor'].withOpacity(0.2),
                 ),
+                //about
                 Padding(
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 10.0, vertical: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         "About",
-                        style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18),
                       ),
                       SizedBox(
                         height: 10,
                       ),
-                      Text(appUserProvider.user?.about ?? "About",style: TextStyle(fontSize: 16,),),
-            
+                      Text(
+                        appUserProvider.user?.about ?? "About",
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -259,21 +274,112 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   thickness: 1,
                   color: AppColors.theme['primaryColor'].withOpacity(0.2),
                 ),
+                //Experience
                 Padding(
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10.0,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Experience",
-                        style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Experience",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
+                          ),
+                          Row(
+                            children: [
+                              IconButton(
+                                icon: Icon(Icons.add),
+                                onPressed: () {},
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.edit),
+                                onPressed: () {},
+                              )
+                            ],
+                          ),
+
+                        ],
                       ),
                       SizedBox(
                         height: 10,
                       ),
-            
+                      ExperienceCard(
+                        experience: Experience(
+                          employementType: "Full Time",
+                          companyName: "Computer Society of India",
+                          positions: [
+                            Positions(
+                              title: "Managing Director",
+                              location: "Ahmedabad,Gujarat,India",
+                              skills: [
+                                "Team Management",
+                                "Leadership",
+                                "App developer",
+                                "Event Organization",
+                              ],
+                              startDate: "Oct 2024",
+                              endDate: "Present",
+                              media: "",
+                            ),
+                            Positions(
+                              title: "Core Committee Member",
+                              location: "Ahmedabad,Gujarat,India",
+                              skills: [
+                                "Team Management",
+                                "Leadership",
+                                "App developer",
+                                "Event Organization",
+                              ],
+                              startDate: "Feb 2024",
+                              endDate: "Nov 2024",
+                              media: "",
+                            ),
+                            Positions(
+                              title: "Executive Committee Member",
+                              location: "Ahmedabad,Gujarat,India",
+                              skills: [
+                                "Team Management",
+                                "Leadership",
+                                "App developer",
+                                "Event Organization",
+                              ],
+                              startDate: "Sep 2023",
+                              endDate: "Feb 2024",
+                              media: "",
+                            )
+                          ],
+
+                        ),
+                      ),
+                      ExperienceCard(
+                        experience: Experience(
+                          employementType: "Full Time",
+                          companyName: "IEEE - Nirma University",
+                          positions: [
+                            Positions(
+                              title: "Vice-chairperson",
+                              location: "Ahmedabad,Gujarat,India",
+                              skills: [
+                                "Team Management",
+                                "Leadership",
+                                "App developer",
+                                "Event Organization",
+                              ],
+                              startDate: "Nov 2024",
+                              endDate: "Present",
+                              media: "",
+                            ),
+
+                          ],
+
+                        ),
+                      ),
+
                     ],
                   ),
                 ),
@@ -281,21 +387,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   thickness: 1,
                   color: AppColors.theme['primaryColor'].withOpacity(0.2),
                 ),
+                //Education
                 Padding(
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10.0,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Education",
-                        style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Education",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
+                          ),
+                          Row(
+                            children: [
+                              IconButton(
+                                icon: Icon(Icons.add),
+                                onPressed: () {},
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.edit),
+                                onPressed: () {},
+                              )
+                            ],
+                          ),
+                        ],
                       ),
                       SizedBox(
                         height: 10,
                       ),
-            
                     ],
                   ),
                 ),
@@ -303,21 +427,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   thickness: 1,
                   color: AppColors.theme['primaryColor'].withOpacity(0.2),
                 ),
+                //Projects
                 Padding(
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Projects",
-                        style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Projects",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
+                          ),
+                          Row(
+                            children: [
+                              IconButton(
+                                icon: Icon(Icons.add),
+                                onPressed: () {},
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.edit),
+                                onPressed: () {},
+                              )
+                            ],
+                          ),
+                        ],
                       ),
                       SizedBox(
                         height: 10,
                       ),
-            
                     ],
                   ),
                 ),
@@ -325,21 +465,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   thickness: 1,
                   color: AppColors.theme['primaryColor'].withOpacity(0.2),
                 ),
+                //skills
                 Padding(
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10.0,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Skils",
-                        style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Skills",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
+                          ),
+                          Row(
+                            children: [
+                              IconButton(
+                                icon: Icon(Icons.add),
+                                onPressed: () {},
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.edit),
+                                onPressed: () {},
+                              )
+                            ],
+                          ),
+                        ],
                       ),
                       SizedBox(
                         height: 10,
                       ),
-            
                     ],
                   ),
                 ),
@@ -347,21 +505,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   thickness: 1,
                   color: AppColors.theme['primaryColor'].withOpacity(0.2),
                 ),
+                // Test scores
                 Padding(
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Test scores",
-                        style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Test Scores",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
+                          ),
+                          Row(
+                            children: [
+                              IconButton(
+                                icon: Icon(Icons.add),
+                                onPressed: () {},
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.edit),
+                                onPressed: () {},
+                              )
+                            ],
+                          ),
+                        ],
                       ),
                       SizedBox(
                         height: 10,
                       ),
-            
                     ],
                   ),
                 ),
@@ -369,28 +543,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   thickness: 1,
                   color: AppColors.theme['primaryColor'].withOpacity(0.2),
                 ),
+                //Languages
                 Padding(
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10.0,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Languages",
-                        style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Languages",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
+                          ),
+                          Row(
+                            children: [
+                              IconButton(
+                                icon: Icon(Icons.add),
+                                onPressed: () {},
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.edit),
+                                onPressed: () {},
+                              )
+                            ],
+                          ),
+                        ],
                       ),
                       SizedBox(
                         height: 10,
                       ),
-            
                     ],
                   ),
                 ),
-                SizedBox(height: 40,),
-            
-            
-            
+                SizedBox(
+                  height: 40,
+                ),
               ],
             ),
           ),
