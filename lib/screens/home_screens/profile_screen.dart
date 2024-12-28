@@ -1,3 +1,4 @@
+import 'package:connectwith/models/user/education.dart';
 import 'package:connectwith/models/user/experience.dart';
 import 'package:connectwith/providers/current_user_provider.dart';
 import 'package:connectwith/screens/home_screens/home_main_screen.dart';
@@ -9,6 +10,7 @@ import 'package:provider/provider.dart';
 import '../../main.dart';
 import '../../utils/widgets/buttons/profile_screen_buttons/profile_custom_button.dart';
 import '../../utils/widgets/custom_containers/profile_screen_container/analytics_tool_container.dart';
+import '../../utils/widgets/custom_containers/profile_screen_container/education_card.dart';
 import '../../utils/widgets/custom_containers/profile_screen_container/experience_card.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -420,6 +422,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       SizedBox(
                         height: 10,
                       ),
+                      EducationCard(
+                        education: Education(
+                          school: "Nirma University",
+                          fieldOfStudy: "B-Tech CSE",
+                          startDate: "June 2022",
+                          endDate: "June 2026",
+                          grade: "7.65",
+                          description: "I am currently pursuing B-Tech from this university",
+                          skills: [
+                            "Data Structure",
+                            "Operating System",
+                            "DBMS",
+                            "Computer Networks"
+                          ],
+                          media: "",
+                        ),
+                      ),
+                      EducationCard(
+                        education: Education(
+                          school: "Dholakiya School",
+                          fieldOfStudy: "11th-12th Science",
+                          startDate: "May 2020",
+                          endDate: "April 2022",
+                          grade: "91%",
+                          description: "",
+                          skills: [
+
+                          ],
+                          media: "",
+                        ),
+                      )
                     ],
                   ),
                 ),
