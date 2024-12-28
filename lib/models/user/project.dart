@@ -2,6 +2,7 @@ import 'package:connectwith/models/user/skills.dart';
 import 'package:connectwith/models/user/user.dart';
 
 class Project {
+
   String? proID;
   String? name;
   String? description;

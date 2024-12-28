@@ -1,5 +1,6 @@
 import 'package:connectwith/models/user/education.dart';
 import 'package:connectwith/models/user/experience.dart';
+import 'package:connectwith/models/user/test_score.dart';
 import 'package:connectwith/providers/current_user_provider.dart';
 import 'package:connectwith/screens/home_screens/home_main_screen.dart';
 import 'package:connectwith/side_transitions/right_left.dart';
@@ -12,6 +13,7 @@ import '../../utils/widgets/buttons/profile_screen_buttons/profile_custom_button
 import '../../utils/widgets/custom_containers/profile_screen_container/analytics_tool_container.dart';
 import '../../utils/widgets/custom_containers/profile_screen_container/education_card.dart';
 import '../../utils/widgets/custom_containers/profile_screen_container/experience_card.dart';
+import '../../utils/widgets/custom_containers/profile_screen_container/test_score_card.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -315,19 +317,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           employementType: "Full Time",
                           companyName: "Computer Society of India",
                           positions: [
-                            Positions(
-                              title: "Managing Director",
-                              location: "Ahmedabad,Gujarat,India",
-                              skills: [
-                                "Team Management",
-                                "Leadership",
-                                "App developer",
-                                "Event Organization",
-                              ],
-                              startDate: "Oct 2024",
-                              endDate: "Present",
-                              media: "",
-                            ),
+
                             Positions(
                               title: "Core Committee Member",
                               location: "Ahmedabad,Gujarat,India",
@@ -358,29 +348,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                         ),
                       ),
-                      ExperienceCard(
-                        experience: Experience(
-                          employementType: "Full Time",
-                          companyName: "IEEE - Nirma University",
-                          positions: [
-                            Positions(
-                              title: "Vice-chairperson",
-                              location: "Ahmedabad,Gujarat,India",
-                              skills: [
-                                "Team Management",
-                                "Leadership",
-                                "App developer",
-                                "Event Organization",
-                              ],
-                              startDate: "Nov 2024",
-                              endDate: "Present",
-                              media: "",
-                            ),
 
-                          ],
-
-                        ),
-                      ),
 
                     ],
                   ),
@@ -568,6 +536,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       SizedBox(
                         height: 10,
+                      ),
+                      TestScoreCard(
+                          testScores: TestScores(
+                            title: "Board",
+                            score: "91%",
+                            testDate: "March 2022",
+                            description: "I Secured 3rd rank in School",
+                          )
+                      ),
+                      Divider(),
+                      TestScoreCard(
+                          testScores: TestScores(
+                            title: "Gujcet",
+                            score: "102.5.120",
+                            testDate: "April 2022",
+                            description: "I Secured 3rd rank in School",
+                          )
                       ),
                     ],
                   ),
