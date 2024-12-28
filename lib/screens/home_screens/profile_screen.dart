@@ -1,5 +1,6 @@
 import 'package:connectwith/models/user/education.dart';
 import 'package:connectwith/models/user/experience.dart';
+import 'package:connectwith/models/user/speak_language.dart';
 import 'package:connectwith/models/user/test_score.dart';
 import 'package:connectwith/providers/current_user_provider.dart';
 import 'package:connectwith/screens/home_screens/home_main_screen.dart';
@@ -13,6 +14,7 @@ import '../../utils/widgets/buttons/profile_screen_buttons/profile_custom_button
 import '../../utils/widgets/custom_containers/profile_screen_container/analytics_tool_container.dart';
 import '../../utils/widgets/custom_containers/profile_screen_container/education_card.dart';
 import '../../utils/widgets/custom_containers/profile_screen_container/experience_card.dart';
+import '../../utils/widgets/custom_containers/profile_screen_container/language_card.dart';
 import '../../utils/widgets/custom_containers/profile_screen_container/test_score_card.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -306,7 +308,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               )
                             ],
                           ),
-
                         ],
                       ),
                       SizedBox(
@@ -317,7 +318,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           employementType: "Full Time",
                           companyName: "Computer Society of India",
                           positions: [
-
                             Positions(
                               title: "Core Committee Member",
                               location: "Ahmedabad,Gujarat,India",
@@ -345,11 +345,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               media: "",
                             )
                           ],
-
                         ),
                       ),
-
-
                     ],
                   ),
                 ),
@@ -397,7 +394,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           startDate: "June 2022",
                           endDate: "June 2026",
                           grade: "7.65",
-                          description: "I am currently pursuing B-Tech from this university",
+                          description:
+                              "I am currently pursuing B-Tech from this university",
                           skills: [
                             "Data Structure",
                             "Operating System",
@@ -415,9 +413,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           endDate: "April 2022",
                           grade: "91%",
                           description: "",
-                          skills: [
-
-                          ],
+                          skills: [],
                           media: "",
                         ),
                       )
@@ -539,21 +535,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       TestScoreCard(
                           testScores: TestScores(
-                            title: "Board",
-                            score: "91%",
-                            testDate: "March 2022",
-                            description: "I Secured 3rd rank in School",
-                          )
-                      ),
+                        title: "Board",
+                        score: "91%",
+                        testDate: "March 2022",
+                        description: "I Secured 3rd rank in School",
+                      )),
                       Divider(),
                       TestScoreCard(
                           testScores: TestScores(
-                            title: "Gujcet",
-                            score: "102.5.120",
-                            testDate: "April 2022",
-                            description: "I Secured 3rd rank in School",
-                          )
-                      ),
+                        title: "Gujcet",
+                        score: "102.5.120",
+                        testDate: "April 2022",
+                        description: "I Secured 3rd rank in School",
+                      )),
                     ],
                   ),
                 ),
@@ -593,6 +587,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       SizedBox(
                         height: 10,
+                      ),
+                      LanguageCard(
+                        speakLanguage: SpeakLanguage(
+                            name: "English",
+                            proficiency: "Full professional proficiency"),
+                      ),
+                      LanguageCard(
+                        speakLanguage: SpeakLanguage(
+                            name: "Gujarati",
+                            proficiency: "Full professional proficiency"),
+                      ),
+                      LanguageCard(
+                        speakLanguage: SpeakLanguage(
+                            name: "Hindi",
+                            proficiency: "Full professional proficiency"),
                       ),
                     ],
                   ),
