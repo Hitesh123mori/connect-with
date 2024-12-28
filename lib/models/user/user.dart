@@ -10,9 +10,7 @@ import 'package:connectwith/models/user/test_score.dart';
 
 import 'address_info.dart';
 
-
 class AppUser {
-
   String? userID;
   String? email;
   String? userName;
@@ -79,7 +77,7 @@ class AppUser {
     map['profilePath'] = profilePath;
     map['coverPath'] = coverPath;
     map['headLine'] = headLine;
-    map['create-at'] = createAt ;
+    map['create-at'] = createAt;
     if (positions != null) {
       map['curPosition'] = positions!.map((e) => e.toJson()).toList();
     }
@@ -118,6 +116,9 @@ class AppUser {
     if (info != null) {
       map['info'] = info!.toJson();
     }
+    if (button != null) {
+      map['button'] = button!.toJson();
+    }
     return map;
   }
 
@@ -151,34 +152,22 @@ class AppUser {
           .toList()
           : null,
       skills: json['skills'] != null
-          ? (json['skills'] as List)
-          .map((e) => Skill.fromJson(e))
-          .toList()
+          ? (json['skills'] as List).map((e) => Skill.fromJson(e)).toList()
           : [],
       projects: json['projects'] != null
-          ? (json['projects'] as List)
-          .map((e) => Project.fromJson(e))
-          .toList()
+          ? (json['projects'] as List).map((e) => Project.fromJson(e)).toList()
           : [],
       language: json['language'] != null
-          ? (json['language'] as List)
-          .map((e) => SpeakLanguage.fromJson(e))
-          .toList()
+          ? (json['language'] as List).map((e) => SpeakLanguage.fromJson(e)).toList()
           : [],
       experiences: json['experiences'] != null
-          ? (json['experiences'] as List)
-          .map((e) => Experience.fromJson(e))
-          .toList()
+          ? (json['experiences'] as List).map((e) => Experience.fromJson(e)).toList()
           : [],
       educations: json['educations'] != null
-          ? (json['educations'] as List)
-          .map((e) => Education.fromJson(e))
-          .toList()
+          ? (json['educations'] as List).map((e) => Education.fromJson(e)).toList()
           : [],
       courses: json['courses'] != null
-          ? (json['courses'] as List)
-          .map((e) => Course.fromJson(e))
-          .toList()
+          ? (json['courses'] as List).map((e) => Course.fromJson(e)).toList()
           : [],
       lacertificate: json['lacertificate'] != null
           ? (json['lacertificate'] as List)

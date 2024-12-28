@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../utils/theme/colors.dart';
+
 class PostScreen extends StatelessWidget {
   const PostScreen({super.key});
 
@@ -8,6 +10,7 @@ class PostScreen extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        backgroundColor: AppColors.theme['secondaryColor'],
         body: Center(
           child: Text("POST SCREEN HERE"),
         ),

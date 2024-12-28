@@ -9,7 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../apis/auth_apis/auth_apis.dart';
-import '../../utils/widgets/buttons/button_1.dart';
+import '../../utils/widgets/buttons/auth_buttons/button_1.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
