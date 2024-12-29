@@ -1,18 +1,19 @@
 import 'package:connectwith/models/common/address_info.dart';
+import 'package:connectwith/models/organization/organization.dart';
 import 'package:connectwith/models/user/contact_info.dart';
 import 'package:connectwith/models/common/custom_button.dart';
 import 'package:connectwith/models/user/user.dart';
 import 'package:connectwith/utils/helper_functions/helper_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart' ;
+import 'package:flutter/material.dart';
 
 import '../../screens/home_screens/home_main_screen.dart';
 import '../../side_transitions/left_right.dart';
 import '../init/config.dart';
 
-class AuthApi{
-
-  static Future<void> signIn(BuildContext context, String email, String password) async {
+class AuthApi {
+  static Future<void> signIn(BuildContext context, String email,
+      String password) async {
     try {
       await Config.auth.signInWithEmailAndPassword(
         email: email,
@@ -21,27 +22,28 @@ class AuthApi{
       HelperFunctions.showToast("Login Successful!");
       Navigator.pushReplacement(context, LeftToRight(HomeScreen()));
     } on FirebaseAuthException catch (e) {
-      HelperFunctions.showToast("Something went wrong") ;
+      HelperFunctions.showToast("Something went wrong");
     } catch (e) {
-      HelperFunctions.showToast("Something went wrong") ;
+      HelperFunctions.showToast("Something went wrong");
     }
   }
 
-  static Future<void> signUp(BuildContext context, String email, String password, String name) async {
+  static Future<void> signUp(BuildContext context, String email,
+      String password, String name, bool isOrganization) async {
     try {
-
-      final existingUser = await AuthApi.userExistsEmail(email);
+      final existingUser = await AuthApi.userExistsEmail(email,isOrganization);
       if (existingUser) {
         HelperFunctions.showToast('This email is already in use.');
         return;
       }
-      UserCredential userCredential = await Config.auth.createUserWithEmailAndPassword(
+      UserCredential userCredential =
+          await Config.auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      await createUserEmail(userCredential, email, password, name);
+      await createUserEmail(
+          userCredential, email, password, name, isOrganization);
       HelperFunctions.showToast("Successfully registered!");
-
     } on FirebaseAuthException catch (e) {
       String errorMessage;
 
@@ -59,70 +61,102 @@ class AuthApi{
     }
   }
 
-
-
-  static Future<void> createUserEmail(
-      UserCredential userCredential, String email, String password,String name) async {
-
+  static Future<void> createUserEmail(UserCredential userCredential,
+      String email, String password, String name, bool isOrganization) async {
     final time = DateTime.now().millisecondsSinceEpoch.toString();
 
-    final appUser = AppUser(
-
-      userID: userCredential.user!.uid,
-      email: email,
-      userName: name,
-      pronoun: "",
-      additionalName: "",
-      profilePath: "",
-      coverPath: "",
-      headLine: "",
-      positions: [],
-      address: Address(
-        cityName: "",
-        stateName: "",
-        countryName: "",
-      ),
-      about: "",
-      followers: 0,
-      following: 0,
-      profileViews: 0,
-      searchCount: 0,
-      testScores: [],
-      skills: [],
-      lacertificate: [],
-      language: [],
-      projects: [],
-      experiences: [],
-      educations: [],
-      courses: [],
-      button: CustomButton(
-        display: false,
-        link: "",
-        linkText: "",
-      ),
-      info: ContactInfo(
-        phoneNumber: "",
-        phoneType: "",
-        address: "",
-        birthday: "",
+    if (isOrganization) {
+      final organization  = Organization(
+        name: name,
         email: email,
-        website: Website(
-          url: "",
-          type: "",
+        domain: "",
+        createAt: time,
+        coverPath: "",
+        logo: "",
+        address: Address(
+          countryName: "",
+          stateName: "",
+          cityName: "",
         ),
-      ),
-      createAt: time,
-    );
-    print("#come") ;
-    return await Config.firestore
-        .collection('users')
-        .doc(userCredential.user!.uid)
-        .set(appUser.toJson());
-  }
-  
+        followers: 0,
+        employees: [],
+        button: CustomButton(
+          display: false,
+          linkText: "",
+          link: "",
+        ),
+        about: "",
+        website: "",
+        companySize: "",
+        type: "",
+        services: [],
 
-  static Future<bool> userExistsEmail(String userId) async {
-    return (await Config.firestore.collection('users').doc(userId).get()).exists;
+
+      ) ;
+
+      return await Config.firestore
+          .collection('organizations')
+          .doc(userCredential.user!.uid)
+          .set(organization.toJson());
+    } else {
+      final appUser = AppUser(
+        userID: userCredential.user!.uid,
+        email: email,
+        userName: name,
+        pronoun: "",
+        additionalName: "",
+        profilePath: "",
+        coverPath: "",
+        headLine: "",
+        positions: [],
+        address: Address(
+          cityName: "",
+          stateName: "",
+          countryName: "",
+        ),
+        about: "",
+        followers: 0,
+        following: 0,
+        profileViews: 0,
+        searchCount: 0,
+        testScores: [],
+        skills: [],
+        lacertificate: [],
+        language: [],
+        projects: [],
+        experiences: [],
+        educations: [],
+        courses: [],
+        button: CustomButton(
+          display: false,
+          link: "",
+          linkText: "",
+        ),
+        info: ContactInfo(
+          phoneNumber: "",
+          phoneType: "",
+          address: "",
+          birthday: "",
+          email: email,
+          website: Website(
+            url: "",
+            type: "",
+          ),
+        ),
+        createAt: time,
+      );
+      print("#come");
+      return await Config.firestore
+          .collection('users')
+          .doc(userCredential.user!.uid)
+          .set(appUser.toJson());
+    }
   }
 
+  static Future<bool> userExistsEmail(
+      String userId, bool isOrganization) async {
+    return isOrganization ?(await Config.firestore.collection('organizations').doc(userId).get())
+        .exists  :(await Config.firestore.collection('users').doc(userId).get())
+        .exists;
+  }
 }

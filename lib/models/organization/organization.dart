@@ -5,6 +5,7 @@ import '../common/address_info.dart';
 class Organization {
   String? organizationId;
   String? name;
+  String? email;
   String? domain;
   String? coverPath;
   String? logo;
@@ -23,6 +24,7 @@ class Organization {
   Organization({
     this.organizationId,
     this.name,
+    this.email,
     this.domain,
     this.createAt,
     this.coverPath,
@@ -42,6 +44,7 @@ class Organization {
     final map = <String, dynamic>{};
     map['organizationId'] = organizationId;
     map['name'] = name;
+    map['email'] = email ;
     map['createAt'] = createAt ;
     map['domain'] = domain;
     map['coverPath'] = coverPath;
@@ -68,6 +71,7 @@ class Organization {
     return Organization(
       organizationId: json['organizationId'],
       name: json['name'],
+      email:json['email'],
       domain: json['domain'],
       createAt:json['createAt'],
       coverPath: json['coverPath'],

@@ -24,9 +24,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
   // For register loading condition
   bool _isLoading = false;
+  bool isOrganization = false;
 
-  // For displaying messages
-  String _message = '';
 
   // Controllers
   final TextEditingController _emailController = TextEditingController();
@@ -41,6 +40,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         _emailController.text,
         _passwordController.text,
           _userNameController.text,
+          isOrganization
       );
       await Navigator.pushReplacement(context, LeftToRight(HomeScreen()));
     } catch (error) {
@@ -198,6 +198,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         "Go to Login",
                                         style: TextStyle(color: AppColors.theme['primaryColor'],fontSize:15,fontWeight: FontWeight.bold ),
                                       ),
+                                    ),
+
+                                    Row(
+                                      children: [
+                                        Checkbox(
+                                          value: isOrganization,
+                                          onChanged: (bool? value) {
+                                            setState(() {
+                                              isOrganization = value ?? false;
+                                            });
+                                          },
+                                          activeColor: AppColors.theme['primaryColor'],
+                                        ),
+                                        Text(
+                                          "Organization",
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
