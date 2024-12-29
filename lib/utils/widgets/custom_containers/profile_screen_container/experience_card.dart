@@ -2,8 +2,6 @@ import 'package:connectwith/models/user/experience.dart';
 import 'package:connectwith/utils/theme/colors.dart';
 import 'package:flutter/material.dart';
 
-import '../../../helper_functions/date_formate.dart';
-
 class ExperienceCard extends StatefulWidget {
   final Experience experience;
   const ExperienceCard({super.key, required this.experience});
@@ -168,7 +166,7 @@ class _ExperienceCardState extends State<ExperienceCard> {
     final years = totalDays ~/ 365;
     final months = (totalDays % 365) ~/ 30;
 
-    return "${years > 0 ? "$years yr " : ""}${months > 0 ? "$months mos" : ""}";
+    return "${years > 0 ? "$years yr " : ""}${months >= 0 ? "$months mos" : ""}";
   }
 
   String _calculateDuration(String startDate, String endDate) {
@@ -181,7 +179,9 @@ class _ExperienceCardState extends State<ExperienceCard> {
     final years = duration.inDays ~/ 365;
     final months = (duration.inDays % 365) ~/ 30;
 
-    return "${years > 0 ? "$years yr " : ""}${months > 0 ? "$months mos" : ""}";
+
+    return "${years > 0 ? "$years yr " : ""}${months >= 0 ? "$months mos" : ""}";
+
   }
 
   DateTime? _parseDate(String date) {
