@@ -1,6 +1,6 @@
-import 'package:connectwith/models/user/address_info.dart';
+import 'package:connectwith/models/common/address_info.dart';
 import 'package:connectwith/models/user/contact_info.dart';
-import 'package:connectwith/models/user/custom_button.dart';
+import 'package:connectwith/models/common/custom_button.dart';
 import 'package:connectwith/models/user/user.dart';
 import 'package:connectwith/utils/helper_functions/helper_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';

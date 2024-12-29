@@ -1,18 +1,18 @@
 import 'package:connectwith/models/user/contact_info.dart';
 import 'package:connectwith/models/user/course_and_liecence.dart';
-import 'package:connectwith/models/user/custom_button.dart';
+import 'package:connectwith/models/common/custom_button.dart';
 import 'package:connectwith/models/user/education.dart';
 import 'package:connectwith/models/user/experience.dart';
 import 'package:connectwith/models/user/project.dart';
 import 'package:connectwith/models/user/skills.dart';
 import 'package:connectwith/models/user/speak_language.dart';
 import 'package:connectwith/models/user/test_score.dart';
-
-import 'address_info.dart';
+import '../common/address_info.dart';
 
 class AppUser {
   String? userID;
   String? email;
+  String? isOrganization ;
   String? userName;
   String? pronoun;
   String? additionalName;
@@ -41,6 +41,7 @@ class AppUser {
   AppUser({
     this.userID,
     this.email,
+    this.isOrganization,
     this.userName,
     this.pronoun,
     this.additionalName,
@@ -70,6 +71,7 @@ class AppUser {
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['userID'] = userID;
+    map['isOrganization'] = isOrganization;
     map['email'] = email;
     map['userName'] = userName;
     map['pronoun'] = pronoun;
@@ -125,6 +127,7 @@ class AppUser {
   factory AppUser.fromJson(dynamic json) {
     return AppUser(
       userID: json['userID'],
+      isOrganization : json['isOrganization'],
       email: json['email'],
       userName: json['userName'],
       pronoun: json['pronoun'],
