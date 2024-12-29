@@ -164,15 +164,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         softWrap: true,
                         overflow: TextOverflow.visible,
                       ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      CustomProfileButton(
-                        data:
-                            appUserProvider.user?.button?.linkText ?? "Button",
-                        link:
-                            appUserProvider.user?.button?.link ?? "google.com",
-                      ),
+                      if(appUserProvider.user?.button!.display==true)
+                        SizedBox(
+                          height: 20,
+                        ),
+                      if(appUserProvider.user?.button!.display==true)
+                        CustomProfileButton(
+                          data:
+                              appUserProvider.user?.button?.linkText ?? "Button",
+                          link:
+                              appUserProvider.user?.button?.link ?? "google.com",
+                        ),
                       SizedBox(height: 20),
                       Row(
                         children: [
