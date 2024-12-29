@@ -2,6 +2,8 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectwith/apis/init/config.dart';
 
+import '../../models/user/experience.dart';
+
 
 class UserProfile {
 
@@ -37,6 +39,33 @@ class UserProfile {
       return false;
     });
   }
+
+  // adding experience
+  static Future<bool> addExperience(String? userId, Experience experience) async {
+    try {
+      DocumentSnapshot userDoc = await _collectionRef.doc(userId).get();
+
+      if (userDoc.exists) {
+        List<dynamic> existingExperiences = userDoc['experiences'] ?? [];
+
+        existingExperiences.add(experience.toJson());
+
+        await _collectionRef.doc(userId).update({
+          'experiences': existingExperiences,
+        });
+
+        log("#Experience added successfully");
+        return true;
+      } else {
+        log("#User not found");
+        return false;
+      }
+    } catch (error, stackTrace) {
+      log("#addExperience error: $error, $stackTrace");
+      return false;
+    }
+  }
+
 
 
 // void fetchAndPrintUserEmail() async {

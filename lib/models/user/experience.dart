@@ -43,13 +43,11 @@ class Positions {
 }
 
 class Experience {
-  String? title;
   String? employementType;
   String? companyName;
   List<Positions>? positions;
 
   Experience({
-    this.title,
     this.employementType,
     this.companyName,
     this.positions,
@@ -57,7 +55,6 @@ class Experience {
 
   Map<String, dynamic> toJson() {
     return {
-      'title': title,
       'employementType': employementType,
       'companyName': companyName,
       'positions': positions?.map((position) => position.toJson()).toList(),
@@ -66,7 +63,6 @@ class Experience {
 
   factory Experience.fromJson(Map<String, dynamic> json) {
     return Experience(
-      title: json['title'],
       employementType: json['employementType'],
       companyName: json['companyName'],
       positions: (json['positions'] as List<dynamic>?)

@@ -4,18 +4,20 @@ import 'package:connectwith/models/user/speak_language.dart';
 import 'package:connectwith/models/user/test_score.dart';
 import 'package:connectwith/providers/current_user_provider.dart';
 import 'package:connectwith/screens/home_screens/home_main_screen.dart';
+import 'package:connectwith/side_transitions/left_right.dart';
 import 'package:connectwith/side_transitions/right_left.dart';
 import 'package:connectwith/utils/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../main.dart';
-import '../../utils/widgets/buttons/profile_screen_buttons/profile_custom_button.dart';
-import '../../utils/widgets/custom_containers/profile_screen_container/analytics_tool_container.dart';
-import '../../utils/widgets/custom_containers/profile_screen_container/education_card.dart';
-import '../../utils/widgets/custom_containers/profile_screen_container/experience_card.dart';
-import '../../utils/widgets/custom_containers/profile_screen_container/language_card.dart';
-import '../../utils/widgets/custom_containers/profile_screen_container/test_score_card.dart';
+import '../../../main.dart';
+import '../../../utils/widgets/buttons/profile_screen_buttons/profile_custom_button.dart';
+import '../../../utils/widgets/custom_containers/profile_screen_container/analytics_tool_container.dart';
+import '../../../utils/widgets/custom_containers/profile_screen_container/education_card.dart';
+import '../../../utils/widgets/custom_containers/profile_screen_container/experience_card.dart';
+import '../../../utils/widgets/custom_containers/profile_screen_container/language_card.dart';
+import '../../../utils/widgets/custom_containers/profile_screen_container/test_score_card.dart';
+import 'add_experience_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -25,11 +27,17 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+
+  bool isfirst = true;
   @override
   Widget build(BuildContext context) {
     mq = MediaQuery.of(context).size;
     return Consumer<AppUserProvider>(
         builder: (context, appUserProvider, child) {
+          if(isfirst){
+            appUserProvider.initUser() ;
+            isfirst  = false;
+          }
       return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
@@ -281,76 +289,72 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   color: AppColors.theme['primaryColor'].withOpacity(0.2),
                 ),
                 //Experience
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10.0,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+             Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10.0,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      Text(
+                        "Experience",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            "Experience",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 18),
+                          IconButton(
+                            icon: Icon(Icons.add),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                LeftToRight(AddExperienceScreen()),
+                              );
+                            },
                           ),
-                          Row(
-                            children: [
-                              IconButton(
-                                icon: Icon(Icons.add),
-                                onPressed: () {},
-                              ),
-                              IconButton(
-                                icon: Icon(Icons.edit),
-                                onPressed: () {},
-                              )
-                            ],
+                          IconButton(
+                            icon: Icon(Icons.edit),
+                            onPressed: () {},
                           ),
                         ],
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      ExperienceCard(
-                        experience: Experience(
-                          employementType: "Full Time",
-                          companyName: "Computer Society of India",
-                          positions: [
-                            Positions(
-                              title: "Core Committee Member",
-                              location: "Ahmedabad,Gujarat,India",
-                              skills: [
-                                "Team Management",
-                                "Leadership",
-                                "App developer",
-                                "Event Organization",
-                              ],
-                              startDate: "Feb 2024",
-                              endDate: "Nov 2024",
-                              media: "",
-                            ),
-                            Positions(
-                              title: "Executive Committee Member",
-                              location: "Ahmedabad,Gujarat,India",
-                              skills: [
-                                "Team Management",
-                                "Leadership",
-                                "App developer",
-                                "Event Organization",
-                              ],
-                              startDate: "Sep 2023",
-                              endDate: "Feb 2024",
-                              media: "",
-                            )
-                          ],
-                        ),
-                      ),
                     ],
                   ),
-                ),
-                Divider(
+                  SizedBox(
+                    height: 10,
+                  ),
+                  // Check if the user has experiences
+                  Consumer<AppUserProvider>(
+                    builder: (context, appUserProvider, _) {
+                      final experiences = appUserProvider.user?.experiences ?? [];
+
+                      if (experiences.isEmpty) {
+                        return Text(
+                          "No experiences added yet.",
+                          style: TextStyle(color: Colors.grey),
+                        );
+                      }
+
+                      // Display the list of experiences
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: experiences.length,
+                        itemBuilder: (context, index) {
+                          return ExperienceCard(experience: experiences[index]);
+                        },
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+            Divider(
                   thickness: 1,
                   color: AppColors.theme['primaryColor'].withOpacity(0.2),
                 ),

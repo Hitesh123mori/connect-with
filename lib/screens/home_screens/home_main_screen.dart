@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:connectwith/models/user/user.dart';
 import 'package:connectwith/providers/current_user_provider.dart';
 import 'package:connectwith/screens/auth_screens/login_screen.dart';
-import 'package:connectwith/screens/home_screens/profile_screen.dart';
+import 'package:connectwith/screens/home_screens/profile_screen/profile_screen.dart';
 import 'package:connectwith/screens/home_screens/tabs/create_post/create_post_screen.dart';
 import 'package:connectwith/screens/home_screens/tabs/jobs/job_screen.dart';
 import 'package:connectwith/screens/home_screens/tabs/network/network_screen.dart';

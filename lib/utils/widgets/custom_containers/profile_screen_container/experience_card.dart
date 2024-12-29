@@ -2,6 +2,8 @@ import 'package:connectwith/models/user/experience.dart';
 import 'package:connectwith/utils/theme/colors.dart';
 import 'package:flutter/material.dart';
 
+import '../../../helper_functions/date_formate.dart';
+
 class ExperienceCard extends StatefulWidget {
   final Experience experience;
   const ExperienceCard({super.key, required this.experience});
@@ -93,7 +95,7 @@ class _ExperienceCardState extends State<ExperienceCard> {
                             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            "${position.startDate ?? "Start Date"} - ${position.endDate ?? "End Date"} - ${_calculateDuration(position.startDate ?? "", position.endDate ?? "")}",
+                            "${position.startDate ?? "Start Date"} - ${position.endDate ?? "End Date"} - ${_calculateDuration((position.startDate ?? "") , (position.endDate ?? ""))}",
                             style: TextStyle(fontSize: 14, color: Colors.grey),
                           ),
                           Text(
