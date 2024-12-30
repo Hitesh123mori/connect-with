@@ -17,6 +17,7 @@ import '../../../utils/widgets/custom_containers/profile_screen_container/langua
 import '../../../utils/widgets/custom_containers/profile_screen_container/test_score_card.dart';
 import 'add_experience_screen.dart';
 import 'edit_experience.dart';
+import 'edit_profile.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -60,6 +61,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 color: Colors.white,
               ),
             ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.push(context, LeftToRight(EditProfile())) ;
+                },
+                child: Text(
+                  "EDIT",
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
           ),
           backgroundColor: AppColors.theme['backgroundColor'],
           body: SingleChildScrollView(
@@ -164,16 +177,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         softWrap: true,
                         overflow: TextOverflow.visible,
                       ),
-                      if(appUserProvider.user?.button!.display==true)
+                      if (appUserProvider.user?.button!.display == true)
                         SizedBox(
                           height: 20,
                         ),
-                      if(appUserProvider.user?.button!.display==true)
+                      if (appUserProvider.user?.button!.display == true)
                         CustomProfileButton(
-                          data:
-                              appUserProvider.user?.button?.linkText ?? "Button",
-                          link:
-                              appUserProvider.user?.button?.link ?? "google.com",
+                          data: appUserProvider.user?.button?.linkText ??
+                              "Button",
+                          link: appUserProvider.user?.button?.link ??
+                              "google.com",
                         ),
                       SizedBox(height: 20),
                       Row(
