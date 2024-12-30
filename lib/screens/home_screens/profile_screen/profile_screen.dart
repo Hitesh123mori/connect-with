@@ -182,8 +182,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                        ],
                      ),
+
                       Text(
                         (appUserProvider.user?.headLine ?? "Headline"),
+                        style: TextStyle(fontSize: 16),
+                        softWrap: true,
+                        overflow: TextOverflow.visible,
+                      ),
+                      SizedBox(height: 10,),
+                      Text(
+                        (appUserProvider.user!.info?.address ?? "Address"),
                         style: TextStyle(fontSize: 16),
                         softWrap: true,
                         overflow: TextOverflow.visible,

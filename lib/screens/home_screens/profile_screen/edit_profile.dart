@@ -412,7 +412,7 @@ class _EditProfileState extends State<EditProfile> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _buildToggleOption("Show CustomButton", showButton,
+                          _buildToggleOption("Show Custom Button", showButton,
                                   (value) {
                                 setState(() => showButton = value);
                               }),
