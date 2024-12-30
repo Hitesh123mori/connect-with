@@ -297,12 +297,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ],
                   ),
                 ),
+
+
+
+                //Experience
+                if(appUserProvider.user?.showExperience!=null)
                 Divider(
                   thickness: 1,
                   color: AppColors.theme['primaryColor'].withOpacity(0.2),
                 ),
-                //Experience
-                Padding(
+                if(appUserProvider.user?.showExperience!=null)
+                   Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 10.0,
                   ),
@@ -364,12 +369,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ],
                   ),
                 ),
+
+
+                //Education
+                if(appUserProvider.user?.showEducation!=null)
                 Divider(
                   thickness: 1,
                   color: AppColors.theme['primaryColor'].withOpacity(0.2),
                 ),
-                //Education
-                Padding(
+                if(appUserProvider.user?.showEducation!=null)
+                  Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 10.0,
                   ),
@@ -434,12 +443,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ],
                   ),
                 ),
+
+
+                //Projects
+                if(appUserProvider.user?.showProject!=null)
                 Divider(
                   thickness: 1,
                   color: AppColors.theme['primaryColor'].withOpacity(0.2),
                 ),
-                //Projects
-                Padding(
+
+                if(appUserProvider.user?.showProject!=null)
+                  Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -472,12 +486,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ],
                   ),
                 ),
+
+                //skills
+                if(appUserProvider.user?.showSkill!=null)
                 Divider(
                   thickness: 1,
                   color: AppColors.theme['primaryColor'].withOpacity(0.2),
                 ),
-                //skills
-                Padding(
+                if(appUserProvider.user?.showSkill!=null)
+                  Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 10.0,
                   ),
@@ -512,12 +529,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ],
                   ),
                 ),
+
+
+                if(appUserProvider.user?.showScore!=null)
+                // Test scores
                 Divider(
                   thickness: 1,
                   color: AppColors.theme['primaryColor'].withOpacity(0.2),
                 ),
-                // Test scores
-                Padding(
+                if(appUserProvider.user?.showScore!=null)
+                  Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -565,12 +586,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ],
                   ),
                 ),
+
+                if(appUserProvider.user?.showLanguage!=null)
+                //Languages
                 Divider(
                   thickness: 1,
                   color: AppColors.theme['primaryColor'].withOpacity(0.2),
                 ),
-                //Languages
-                Padding(
+                if(appUserProvider.user?.showLanguage!=null)
+                  Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 10.0,
                   ),
@@ -620,6 +644,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ],
                   ),
                 ),
+
+
                 SizedBox(
                   height: 40,
                 ),
