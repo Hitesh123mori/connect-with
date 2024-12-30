@@ -2,6 +2,7 @@ class SpeakLanguage {
   String? name;
   String? proficiency;
 
+
   SpeakLanguage({
     this.name,
     this.proficiency,

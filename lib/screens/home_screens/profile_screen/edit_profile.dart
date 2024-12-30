@@ -24,8 +24,15 @@ class _EditProfileState extends State<EditProfile> {
   String? _about;
   bool isLoading = false;
 
-  Future<void> _saveProfile(AppUserProvider appUserProvider) async {
+  // Additional toggles
+  bool showExperience = false;
+  bool showEducation = false;
+  bool showProjects = false;
+  bool showSkills = false;
+  bool showScores = false;
+  bool showLanguage = false;
 
+  Future<void> _saveProfile(AppUserProvider appUserProvider) async {
     if (_formKey.currentState?.validate() ?? false) {
       _formKey.currentState?.save();
 
@@ -34,6 +41,12 @@ class _EditProfileState extends State<EditProfile> {
         {
           'headLine': _headline,
           'about': _about,
+          'showExperience': showExperience,
+          'showEducation': showEducation,
+          'showProject': showProjects,
+          'showSkill': showSkills,
+          'showScore': showScores,
+          'showLanguage': showLanguage,
         },
       );
 
@@ -50,8 +63,17 @@ class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     mq = MediaQuery.of(context).size;
-    return Consumer<AppUserProvider>(
-        builder: (context, appUserProvider, child) {
+    return Consumer<AppUserProvider>(builder: (context, appUserProvider, child) {
+
+      showExperience = appUserProvider.user?.showExperience ?? false;
+      showEducation = appUserProvider.user?.showEducation ?? false;
+      showProjects = appUserProvider.user?.showProject ?? false;
+      showSkills = appUserProvider.user?.showSkill ?? false;
+      showScores = appUserProvider.user?.showScore ?? false;
+      showLanguage = appUserProvider.user?.showLanguage ?? false;
+
+
+
       return GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: MaterialApp(
@@ -62,9 +84,10 @@ class _EditProfileState extends State<EditProfile> {
               title: Text(
                 "Edit Profile",
                 style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               centerTitle: true,
               backgroundColor: AppColors.theme['primaryColor'],
@@ -82,93 +105,124 @@ class _EditProfileState extends State<EditProfile> {
               ),
             ),
             body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
               child: Form(
                 key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Edit Profile",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Edit Profile",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      "Headline",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                      SizedBox(height: 20),
+
+                      // Headline field
+                      Text(
+                        "Headline",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    TextFeild1(
-                      hintText: "Enter Headline",
-                      isNumber: false,
-                      prefixicon: Icon(Icons.text_format_outlined),
-                      obsecuretext: false,
-                      initialText: appUserProvider.user?.headLine,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Headline cannot be empty";
-                        }
-                        return null;
-                      },
-                      onSaved: (value) => _headline = value,
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      "About",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                      TextFeild1(
+                        hintText: "Enter Headline",
+                        isNumber: false,
+                        prefixicon: Icon(Icons.text_format_outlined),
+                        obsecuretext: false,
+                        initialText: appUserProvider.user?.headLine,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Headline cannot be empty";
+                          }
+                          return null;
+                        },
+                        onSaved: (value) => _headline = value,
                       ),
-                    ),
-                    TextFeild1(
-                      hintText: "Enter About",
-                      isNumber: false,
-                      prefixicon: Icon(Icons.info_outline),
-                      obsecuretext: false,
-                      initialText: appUserProvider.user?.about,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "About cannot be empty";
-                        }
-                        return null;
-                      },
-                      onSaved: (value) => _about = value,
-                    ),
-                    SizedBox(height: 20),
-                    Center(
-                      child: Button1(
+                      SizedBox(height: 20),
+
+                      // About field
+                      Text(
+                        "About",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextFeild1(
+                        hintText: "Enter About",
+                        isNumber: false,
+                        prefixicon: Icon(Icons.info_outline),
+                        obsecuretext: false,
+                        initialText: appUserProvider.user?.about,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "About cannot be empty";
+                          }
+                          return null;
+                        },
+                        onSaved: (value) => _about = value,
+                      ),
+                      SizedBox(height: 20),
+
+                      // Toggle options
+                      _buildToggleOption(
+                          "Show Experience", showExperience, (value) {
+                        setState(() => showExperience = value);
+                      }),
+                      _buildToggleOption(
+                          "Show Education", showEducation, (value) {
+                        setState(() => showEducation = value);
+                      }),
+                      _buildToggleOption(
+                          "Show Projects", showProjects, (value) {
+                        setState(() => showProjects = value);
+                      }),
+                      _buildToggleOption("Show Skills", showSkills, (value) {
+                        setState(() => showSkills = value);
+                      }),
+                      _buildToggleOption("Show Scores", showScores, (value) {
+                        setState(() => showScores = value);
+                      }),
+                      _buildToggleOption(
+                          "Show Language", showLanguage, (value) {
+                        setState(() => showLanguage = value);
+                      }),
+
+                      SizedBox(height: 30),
+
+                      // Save button
+                      Center(
+                        child: Button1(
                           isLoading: isLoading,
                           height: 50,
                           loadWidth: mq.width * 0.5,
                           width: mq.width * 1,
                           textColor: AppColors.theme['secondaryColor'],
                           bgColor: AppColors.theme['primaryColor'],
-                          onTap: ()async{
+                          onTap: () async {
                             setState(() {
                               isLoading = true;
                             });
-                            await _saveProfile(appUserProvider) ;
+                            await _saveProfile(appUserProvider);
                             setState(() {
                               isLoading = false;
                             });
 
                             await appUserProvider.initUser();
 
-                            Navigator.pop(context) ;
-
+                            await Future.delayed(Duration(seconds: 4));
+                            Navigator.pop(context);
                           },
-
-                          title: "Save Profile"
+                          title: "Save Profile",
+                        ),
                       ),
-                    )
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -176,5 +230,27 @@ class _EditProfileState extends State<EditProfile> {
         ),
       );
     });
+  }
+
+  // Helper method for toggle UI
+  Widget _buildToggleOption(
+      String label, bool value, void Function(bool) onChanged) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Switch(
+          value: value,
+          onChanged: onChanged,
+          activeColor: AppColors.theme['primaryColor'],
+        ),
+      ],
+    );
   }
 }

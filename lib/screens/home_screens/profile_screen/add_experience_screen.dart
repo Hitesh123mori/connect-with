@@ -425,7 +425,7 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                         ),
 
                         // Submit button
-                        SizedBox(height: 30),
+                        SizedBox(height: 20),
                         Center(
                           child: Button1(
                             isLoading: isLoading,

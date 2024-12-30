@@ -12,13 +12,19 @@ import '../common/address_info.dart';
 class AppUser {
   String? userID;
   String? email;
+  bool? showProject;
+  bool?showScore;
   String? isOrganization ;
+  bool? showEducation;
+  bool? showSkill;
   String? userName;
   String? pronoun;
+  bool? showLanguage;
   String? additionalName;
   String? profilePath;
   String? coverPath;
   String? headLine;
+  bool?showExperience;
   List<Experience>? positions;
   Address? address;
   String? about;
@@ -41,10 +47,16 @@ class AppUser {
   AppUser({
     this.userID,
     this.email,
+    this.showScore,
+    this.showEducation,
     this.isOrganization,
+    this.showLanguage,
     this.userName,
     this.pronoun,
+    this.showSkill,
+    this.showProject,
     this.additionalName,
+    this.showExperience,
     this.profilePath,
     this.coverPath,
     this.headLine,
@@ -71,9 +83,15 @@ class AppUser {
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['userID'] = userID;
+    map['showSkill']=showSkill;
+    map['showEducation'] =showEducation;
+    map['showExperience'] = showExperience;
+    map['showLanguage']=showLanguage;
     map['isOrganization'] = isOrganization;
     map['email'] = email;
+    map['showProject']=showProject;
     map['userName'] = userName;
+    map['showScore'] = showScore;
     map['pronoun'] = pronoun;
     map['additionalName'] = additionalName;
     map['profilePath'] = profilePath;
@@ -91,6 +109,7 @@ class AppUser {
     map['following'] = following;
     map['profileViews'] = profileViews;
     map['searchCount'] = searchCount;
+    map['showExperience']=showExperience;
     if (testScores != null) {
       map['testScores'] = testScores!.map((e) => e.toJson()).toList();
     }
@@ -127,9 +146,15 @@ class AppUser {
   factory AppUser.fromJson(dynamic json) {
     return AppUser(
       userID: json['userID'],
+      showEducation:json['showEducation'],
+      showProject:json['showProject'],
+      showExperience:json['showExperience'],
       isOrganization : json['isOrganization'],
       email: json['email'],
+      showScore:json['showScore'],
+      showSkill:json['showSkill'],
       userName: json['userName'],
+      showLanguage:json['showLanguage'],
       pronoun: json['pronoun'],
       additionalName: json['additionalName'],
       profilePath: json['profilePath'],

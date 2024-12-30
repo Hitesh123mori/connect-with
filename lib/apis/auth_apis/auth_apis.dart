@@ -102,6 +102,12 @@ class AuthApi {
       final appUser = AppUser(
         userID: userCredential.user!.uid,
         email: email,
+        showScore: false,
+        showEducation: false,
+        showExperience :false,
+        showProject:false,
+        showSkill:false,
+        showLanguage: false,
         userName: name,
         pronoun: "",
         additionalName: "",
