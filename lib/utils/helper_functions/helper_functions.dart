@@ -9,6 +9,7 @@ class HelperFunctions{
 
   /// for launch url
   static void launchURL(String url) {
+    url = "https://" + url ;
     launchUrl(Uri.parse(url));
   }
 

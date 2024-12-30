@@ -163,14 +163,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        (appUserProvider.user?.userName ?? "Name") +
-                            " (" +
-                            (appUserProvider.user?.pronoun ?? "Pronoun") +
-                            ") ",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 22),
-                      ),
+                     Row(
+                       children: [
+                         Text(
+                           appUserProvider.user?.userName ?? "Name",
+                           style: TextStyle(
+                               fontWeight: FontWeight.bold, fontSize: 22),
+                         ),
+
+                        if(appUserProvider.user?.pronoun!="")
+                         Text(
+                           " (" +
+                               (appUserProvider.user?.pronoun ?? "Pronoun") +
+                               ") ",
+                           style: TextStyle(
+                               fontWeight: FontWeight.bold, fontSize: 22),
+                         ),
+
+                       ],
+                     ),
                       Text(
                         (appUserProvider.user?.headLine ?? "Headline"),
                         style: TextStyle(fontSize: 16),
@@ -299,14 +310,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
 
 
-
                 //Experience
-                if(appUserProvider.user?.showExperience!=null)
-                Divider(
-                  thickness: 1,
-                  color: AppColors.theme['primaryColor'].withOpacity(0.2),
-                ),
-                if(appUserProvider.user?.showExperience!=null)
+
+                if(appUserProvider.user?.showExperience!=false)
+                  Divider(
+                    thickness: 1,
+                    color: AppColors.theme['primaryColor'].withOpacity(0.2),
+                  ),
+
+                if(appUserProvider.user?.showExperience!=false)
                    Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 10.0,
@@ -370,14 +382,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
 
-
                 //Education
-                if(appUserProvider.user?.showEducation!=null)
+                if(appUserProvider.user?.showEducation!=false)
                 Divider(
                   thickness: 1,
                   color: AppColors.theme['primaryColor'].withOpacity(0.2),
                 ),
-                if(appUserProvider.user?.showEducation!=null)
+                if(appUserProvider.user?.showEducation!=false)
                   Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 10.0,
@@ -446,13 +457,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
 
                 //Projects
-                if(appUserProvider.user?.showProject!=null)
+                if(appUserProvider.user?.showProject!=false)
                 Divider(
                   thickness: 1,
                   color: AppColors.theme['primaryColor'].withOpacity(0.2),
                 ),
 
-                if(appUserProvider.user?.showProject!=null)
+                if(appUserProvider.user?.showProject!=false)
                   Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Column(
@@ -488,12 +499,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
 
                 //skills
-                if(appUserProvider.user?.showSkill!=null)
+                if(appUserProvider.user?.showSkill!=false)
                 Divider(
                   thickness: 1,
                   color: AppColors.theme['primaryColor'].withOpacity(0.2),
                 ),
-                if(appUserProvider.user?.showSkill!=null)
+                if(appUserProvider.user?.showSkill!=false)
                   Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 10.0,
@@ -531,13 +542,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
 
 
-                if(appUserProvider.user?.showScore!=null)
+                if(appUserProvider.user?.showScore!=false)
                 // Test scores
                 Divider(
                   thickness: 1,
                   color: AppColors.theme['primaryColor'].withOpacity(0.2),
                 ),
-                if(appUserProvider.user?.showScore!=null)
+                if(appUserProvider.user?.showScore!=false)
                   Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Column(
@@ -587,13 +598,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
 
-                if(appUserProvider.user?.showLanguage!=null)
+                if(appUserProvider.user?.showLanguage!=false)
                 //Languages
                 Divider(
                   thickness: 1,
                   color: AppColors.theme['primaryColor'].withOpacity(0.2),
                 ),
-                if(appUserProvider.user?.showLanguage!=null)
+                if(appUserProvider.user?.showLanguage!=false)
                   Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 10.0,

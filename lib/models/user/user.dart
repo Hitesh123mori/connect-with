@@ -14,18 +14,16 @@ class AppUser {
   String? email;
   bool? showProject;
   bool?showScore;
-  String? isOrganization ;
+  bool? isOrganization ;
   bool? showEducation;
   bool? showSkill;
   String? userName;
   String? pronoun;
   bool? showLanguage;
-  String? additionalName;
   String? profilePath;
   String? coverPath;
   String? headLine;
   bool?showExperience;
-  List<Experience>? positions;
   Address? address;
   String? about;
   int? followers;
@@ -55,12 +53,10 @@ class AppUser {
     this.pronoun,
     this.showSkill,
     this.showProject,
-    this.additionalName,
     this.showExperience,
     this.profilePath,
     this.coverPath,
     this.headLine,
-    this.positions,
     this.address,
     this.about,
     this.followers,
@@ -93,14 +89,10 @@ class AppUser {
     map['userName'] = userName;
     map['showScore'] = showScore;
     map['pronoun'] = pronoun;
-    map['additionalName'] = additionalName;
     map['profilePath'] = profilePath;
     map['coverPath'] = coverPath;
     map['headLine'] = headLine;
     map['create-at'] = createAt;
-    if (positions != null) {
-      map['curPosition'] = positions!.map((e) => e.toJson()).toList();
-    }
     if (address != null) {
       map['address'] = address!.toJson();
     }
@@ -156,16 +148,10 @@ class AppUser {
       userName: json['userName'],
       showLanguage:json['showLanguage'],
       pronoun: json['pronoun'],
-      additionalName: json['additionalName'],
       profilePath: json['profilePath'],
       coverPath: json['coverPath'],
       headLine: json['headLine'],
       createAt: json['create-at'],
-      positions: json['curPosition'] != null
-          ? (json['curPosition'] as List)
-          .map((e) => Experience.fromJson(e))
-          .toList()
-          : null,
       address: json['address'] != null ? Address.fromJson(json['address']) : null,
       about: json['about'],
       followers: json['followers'],

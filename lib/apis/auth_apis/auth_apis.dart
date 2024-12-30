@@ -100,6 +100,7 @@ class AuthApi {
           .set(organization.toJson());
     } else {
       final appUser = AppUser(
+        isOrganization: false,
         userID: userCredential.user!.uid,
         email: email,
         showScore: false,
@@ -110,11 +111,9 @@ class AuthApi {
         showLanguage: false,
         userName: name,
         pronoun: "",
-        additionalName: "",
         profilePath: "",
         coverPath: "",
         headLine: "ConnectWith User",
-        positions: [],
         address: Address(
           cityName: "",
           stateName: "",
@@ -140,14 +139,9 @@ class AuthApi {
         ),
         info: ContactInfo(
           phoneNumber: "",
-          phoneType: "",
           address: "",
-          birthday: "",
           email: email,
-          website: Website(
-            url: "",
-            type: "",
-          ),
+          website: "",
         ),
         createAt: time,
       );
